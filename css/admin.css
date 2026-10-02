@@ -1,0 +1,405 @@
+/* ===================================================================
+   Admin & Staff Portal Styles (Manager & Receptionist RBAC)
+   "The Grand Horizon Luxury Resort & Spa"
+   =================================================================== */
+
+.admin-portal-view {
+    padding-top: 100px;
+    padding-bottom: 5rem;
+    min-height: 100vh;
+    background: #f1f5f9;
+}
+
+/* Admin Top Bar & Header */
+.admin-header-bar {
+    background: linear-gradient(135deg, #0b1528 0%, #1e293b 100%);
+    color: #ffffff;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--gold);
+    box-shadow: var(--shadow-md);
+}
+
+.admin-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.admin-identity {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.admin-badge-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.icon-manager {
+    background: var(--gold-gradient);
+    color: #ffffff;
+}
+
+.icon-receptionist {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+}
+
+.admin-title-wrap h2 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 2px;
+}
+
+.admin-role-tag {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+}
+
+.tag-manager {
+    background: var(--gold-light);
+    color: #8c6a0f;
+    border: 1px solid rgba(197, 155, 39, 0.4);
+}
+
+.tag-receptionist {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.admin-meta-info {
+    color: #94a3b8;
+    font-size: 0.88rem;
+}
+
+.admin-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Metrics / KPI Grid */
+.admin-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.metric-card {
+    background: #ffffff;
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform var(--transition-fast);
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.metric-info span {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.metric-info h3 {
+    font-size: 1.9rem;
+    color: var(--primary);
+    font-family: var(--font-heading);
+}
+
+.metric-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.metric-blue { background: #eff6ff; color: #2563eb; }
+.metric-gold { background: var(--gold-light); color: var(--gold); }
+.metric-green { background: #d1fae5; color: var(--success); }
+.metric-purple { background: #f3e8ff; color: #9333ea; }
+
+/* Admin Panels & Cards */
+.admin-card-panel {
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+}
+
+.panel-header {
+    padding: 1.25rem 1.75rem;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.panel-header h3 {
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.panel-body {
+    padding: 1.5rem 1.75rem;
+}
+
+/* Tables in Admin */
+.admin-table-wrap {
+    overflow-x: auto;
+}
+
+.admin-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.admin-data-table th {
+    background: #f8fafc;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.8px;
+    padding: 12px 14px;
+    border-bottom: 1.5px solid var(--border-color);
+}
+
+.admin-data-table td {
+    padding: 14px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-main);
+    vertical-align: middle;
+}
+
+.admin-data-table tr:hover td {
+    background: #fbfcfe;
+}
+
+/* Badges */
+.badge-bill-draft {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+.badge-bill-finalized {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+.badge-bill-paid {
+    background: #d1fae5;
+    color: #065f46;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+/* Service Request Cards */
+.services-flow-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.service-task-card {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all var(--transition-fast);
+}
+
+.service-task-card:hover {
+    border-color: var(--gold);
+    box-shadow: var(--shadow-sm);
+}
+
+.service-task-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.service-task-title {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 0.95rem;
+}
+
+.service-status-pill {
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.status-pending { background: #fef3c7; color: #b45309; }
+.status-in-progress { background: #dbeafe; color: #1d4ed8; }
+.status-completed { background: #d1fae5; color: #047857; }
+
+.service-task-meta {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.service-task-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: auto;
+}
+
+/* Staff Directory Grid */
+.staff-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.staff-member-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.staff-avatar-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.staff-info-col h4 {
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.staff-info-col p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Invoice Modal for Manager */
+.invoice-card {
+    border: 2px solid var(--gold);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    background: #ffffff;
+    margin-bottom: 1.5rem;
+}
+
+.invoice-header-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.invoice-items-table {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    border-collapse: collapse;
+}
+
+.invoice-items-table th, .invoice-items-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.invoice-totals-box {
+    margin-left: auto;
+    width: 280px;
+    background: #f8fafc;
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .admin-metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .services-flow-grid, .staff-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .admin-metrics-grid {
+        grid-template-columns: 1fr;
+    }
+    .services-flow-grid, .staff-cards-grid {
+        grid-template-columns: 1fr;
+    }
+    .admin-header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

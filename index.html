@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Grand Horizon Resort & Spa | Luxury Hotel Management System</title>
+    <meta name="description" content="Experience bespoke hospitality, oceanfront villas, Michelin-star gastronomy, and holistic spa retreats. Book your unforgettable stay.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Application Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/auth-modal.css">
+    <link rel="stylesheet" href="css/booking.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <!-- ===================================================================
+         Top Navigation Bar
+         =================================================================== -->
+    <header class="header-nav">
+        <div class="container header-container">
+            <a href="#" class="brand-logo nav-link-home">
+                <div class="brand-crest">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>THE GRAND HORIZON</h1>
+                    <span>Luxury Resort & Spa</span>
+                </div>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#home" class="nav-link nav-link-home active">Home</a>
+                <a href="#specialities" class="nav-link" onclick="window.app.switchToHomeView(); setTimeout(() => document.getElementById('specialities').scrollIntoView({behavior: 'smooth'}), 100);">Specialities</a>
+                <a href="#featured" class="nav-link" onclick="window.app.switchToHomeView(); setTimeout(() => document.getElementById('featured').scrollIntoView({behavior: 'smooth'}), 100);">Suites</a>
+                <a href="#booking" class="nav-link nav-link-booking"><i class="fas fa-calendar-alt text-gold"></i> Book a Room</a>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Logged-in State (Initially hidden if guest is not logged in) -->
+                <div id="navGuestMenu" class="nav-guest-menu" style="display: none;">
+                    <div class="guest-profile-pill">
+                        <div class="guest-avatar"><i class="fas fa-user"></i></div>
+                        <span id="navGuestName">Alex Rivera</span>
+                    </div>
+                    <button id="navMyBookingsBtn" class="btn btn-outline-gold btn-sm" title="View My Reservations">
+                        <i class="fas fa-receipt"></i> My Bookings
+                    </button>
+                    <button id="navLogoutBtn" class="btn btn-outline-danger btn-sm" title="Sign Out">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+
+                <!-- Staff / Admin Portal Button -->
+                <button id="navAdminBtn" class="btn btn-outline-gold btn-sm" title="Staff Portal (Manager & Receptionist)">
+                    <i class="fas fa-user-shield"></i> Staff Portal
+                </button>
+
+                <!-- Public / Not Logged-in State -->
+                <button id="navLoginBtn" class="btn btn-gold btn-sm">
+                    <i class="fas fa-user-lock"></i> Guest Sign In
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===================================================================
+         VIEW 1: PUBLIC HOME LANDING PAGE
+         =================================================================== -->
+    <main id="homeView">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-overlay-pattern"></div>
+            <div class="hero-content">
+                <div class="hero-rating-badge">
+                    <i class="fas fa-star text-gold"></i>
+                    <span>Rated 4.95 / 5 by over 2,840+ discerning global guests</span>
+                </div>
+                <h1 class="hero-title">
+                    Where Timeless Luxury Meets <span>Coastal Serenity</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Immerse yourself in an intimate sanctuary of private oceanfront villas, Michelin-starred culinary journeys, infinity sunset pools, and bespoke wellness retreats.
+                </p>
+                <div class="hero-actions">
+                    <button id="heroBookNowBtn" class="btn btn-gold">
+                        <i class="fas fa-key"></i> Reserve Your Stay
+                    </button>
+                    <button id="heroExploreBtn" class="btn btn-outline-gold">
+                        <i class="fas fa-compass"></i> Discover Specialities
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Availability Search Bar -->
+        <div class="container">
+            <div class="hero-quick-bar">
+                <div class="quick-bar-field">
+                    <label><i class="fas fa-calendar-check"></i> Check-in Date</label>
+                    <input type="date" id="heroCheckIn">
+                </div>
+                <div class="quick-bar-field">
+                    <label><i class="fas fa-calendar-times"></i> Check-out Date</label>
+                    <input type="date" id="heroCheckOut">
+                </div>
+                <div class="quick-bar-field">
+                    <label><i class="fas fa-user-friends"></i> Guests</label>
+                    <select id="heroGuests">
+                        <option value="1">1 Guest</option>
+                        <option value="2" selected>2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4+ Family</option>
+                    </select>
+                </div>
+                <div class="quick-bar-field">
+                    <label><i class="fas fa-bed"></i> Accommodation</label>
+                    <select id="heroRoomType">
+                        <option value="all">All Luxury Suites</option>
+                        <option value="deluxe">Deluxe King Suites</option>
+                        <option value="suite">Executive Suites</option>
+                        <option value="villa">Private Oceanfront Villas</option>
+                        <option value="penthouse">Royal Penthouse</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="window.app.handleHomeSuiteAction('deluxe-ocean-king')">
+                    <i class="fas fa-search"></i> Check Rates
+                </button>
+            </div>
+        </div>
+
+        <!-- Specialities & Amenities Section -->
+        <section id="specialities" class="specialities-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">World-Class Hospitality</span>
+                    <h2>Our Signature Specialities</h2>
+                    <p>Designed with understated luxury and meticulous attention to detail, each experience is tailored to elevate your stay beyond the ordinary.</p>
+                </div>
+
+                <!-- Dynamically rendered specialities -->
+                <div id="specialitiesGrid" class="specialities-grid">
+                    <!-- Injected by app.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Suites Preview Section -->
+        <section id="featured" class="featured-suites-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Curated Accommodations</span>
+                    <h2>Flagship Suites & Sanctuaries</h2>
+                    <p>Explore our most coveted rooms featuring panoramic ocean vistas, private plunge pools, and personalized butler services.</p>
+                </div>
+
+                <div id="featuredSuitesGrid" class="featured-grid">
+                    <!-- Injected by app.js -->
+                </div>
+
+                <div style="text-align: center; margin-top: 3.5rem;">
+                    <button class="btn btn-primary nav-link-booking" onclick="window.app.switchToBookingView()">
+                        <i class="fas fa-th-large"></i> View All Available Rooms & Rates
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust & Awards Strip -->
+        <section class="trust-stats-section">
+            <div class="container">
+                <div class="trust-stats-grid">
+                    <div class="stat-item">
+                        <h3>98.7%</h3>
+                        <p>Guest Satisfaction Rating</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>#1</h3>
+                        <p>Best Coastal Luxury Resort 2025</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>24 / 7</h3>
+                        <p>Dedicated Royal Butler Service</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>100%</h3>
+                        <p>Certified Eco-Luxe Sanctuary</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===================================================================
+         VIEW 2: CUSTOMER GUEST BOOKING WEBPAGE (POST-LOGIN EXPERIENCE)
+         =================================================================== -->
+    <main id="bookingView" class="booking-portal-section" style="display: none;">
+        <!-- Guest Greeting Banner -->
+        <div class="portal-header-banner">
+            <div class="container">
+                <div class="portal-welcome-text">
+                    <h2>Welcome to Your Reservation Sanctuary, <span id="portalUserWelcomeName" class="text-gold">Alex Rivera</span> ✨</h2>
+                    <p>Select your arrival dates, customize bespoke add-on experiences, and enjoy guaranteed best rates.</p>
+                </div>
+                <div class="portal-top-actions">
+                    <button id="portalBackHomeBtn" class="btn btn-outline-gold btn-sm">
+                        <i class="fas fa-arrow-left"></i> Return to Hotel Showcase
+                    </button>
+                    <button class="btn btn-gold btn-sm" onclick="window.booking.openMyBookings()">
+                        <i class="fas fa-receipt"></i> View My Active Bookings
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Filter & Search Control Panel -->
+            <div class="portal-filter-panel">
+                <div class="filter-dates-row">
+                    <div class="filter-field">
+                        <label><i class="fas fa-calendar-plus"></i> Check-in Date</label>
+                        <input type="date" id="portalCheckIn">
+                    </div>
+                    <div class="filter-field">
+                        <label><i class="fas fa-calendar-check"></i> Check-out Date</label>
+                        <input type="date" id="portalCheckOut">
+                    </div>
+                    <div class="filter-field">
+                        <label><i class="fas fa-users"></i> Guests</label>
+                        <select id="bookingGuestsSelect">
+                            <option value="1" selected>1 Adult</option>
+                            <option value="2">2 Adults</option>
+                            <option value="3">3 Guests</option>
+                            <option value="4">4+ Guests / Family</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label><i class="fas fa-clock"></i> Duration</label>
+                        <div id="portalNightsBadge" class="nights-badge">
+                            <i class="fas fa-moon"></i> 2 Nights
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="window.booking.renderRooms()">
+                        <i class="fas fa-filter"></i> Apply
+                    </button>
+                </div>
+
+                <!-- Category Pills and Sorting -->
+                <div class="filter-categories-row">
+                    <div id="roomTypePills" class="category-pills">
+                        <button class="filter-pill active" data-type="all">All Suites (3)</button>
+                        <button class="filter-pill" data-type="standard">Standard Suites</button>
+                        <button class="filter-pill" data-type="deluxe">Deluxe Suites</button>
+                        <button class="filter-pill" data-type="suite">Wellness Suites</button>
+                    </div>
+
+                    <div class="sort-wrapper">
+                        <label for="bookingSortSelect"><i class="fas fa-sort-amount-down"></i> Sort by:</label>
+                        <select id="bookingSortSelect">
+                            <option value="recommended">Curated / Recommended</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Guest Rating</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Room Catalog Grid -->
+            <div id="roomCatalogGrid" class="rooms-catalog-grid">
+                <!-- Dynamically populated by booking.js -->
+            </div>
+        </div>
+    </main>
+
+    <!-- ===================================================================
+         VIEW 3: ADMIN & STAFF PORTAL (MANAGER & RECEPTIONIST RBAC)
+         =================================================================== -->
+    <main id="adminView" class="admin-portal-view" style="display: none;">
+        <!-- Admin Header Bar -->
+        <div class="admin-header-bar">
+            <div class="container admin-header-content">
+                <div class="admin-identity">
+                    <div id="adminBadgeIcon" class="admin-badge-icon icon-manager">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="admin-title-wrap">
+                        <h2>
+                            <span id="adminStaffName">Robert Sterling</span>
+                            <span id="adminRoleBadge" class="admin-role-tag tag-manager">Executive Manager</span>
+                        </h2>
+                        <div class="admin-meta-info">
+                            <span><i class="fas fa-id-badge text-gold"></i> Staff ID: <strong id="adminStaffId">MGR-101</strong></span> &bull;
+                            <span><i class="fas fa-user-shield text-gold"></i> Role: <strong id="adminStaffRole">MANAGER</strong></span> &bull;
+                            <span><i class="fas fa-hotel text-gold"></i> Property: The Grand Horizon</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-top-actions">
+                    <button class="btn btn-outline-gold btn-sm" onclick="window.app.switchToHomeView()">
+                        <i class="fas fa-globe"></i> View Public Site
+                    </button>
+                    <button id="adminLogoutBtn" class="btn btn-outline-danger btn-sm">
+                        <i class="fas fa-sign-out-alt"></i> Staff Sign Out
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- =======================================================
+                 SECTION A: MANAGER DASHBOARD
+                 ======================================================= -->
+            <div id="adminManagerSection" style="display: none;">
+                <!-- Manager KPI Metrics -->
+                <div class="admin-metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-info">
+                            <span>Total Gross Revenue</span>
+                            <h3 id="mgrMetricRevenue" class="text-gold">₹0.00</h3>
+                        </div>
+                        <div class="metric-icon-wrap metric-gold"><i class="fas fa-chart-line"></i></div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-info">
+                            <span>Active Guest Stays</span>
+                            <h3 id="mgrMetricActiveGuests">0</h3>
+                        </div>
+                        <div class="metric-icon-wrap metric-blue"><i class="fas fa-users"></i></div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-info">
+                            <span>Pending Bills to Finalize</span>
+                            <h3 id="mgrMetricPendingBills">0</h3>
+                        </div>
+                        <div class="metric-icon-wrap metric-purple"><i class="fas fa-file-invoice"></i></div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-info">
+                            <span>Staff Members Active</span>
+                            <h3 id="mgrMetricStaffCount">0</h3>
+                        </div>
+                        <div class="metric-icon-wrap metric-green"><i class="fas fa-user-tie"></i></div>
+                    </div>
+                </div>
+
+                <!-- 1. Master Overall Billing & Reservations Management -->
+                <div class="admin-card-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-file-invoice-dollar text-gold"></i> Overall Billing & Reservation Finalization</h3>
+                        <span class="text-muted" style="font-size: 0.85rem;">Manager authorization: Calculate room base, add-on services, taxes, apply discounts & mark bills as paid.</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="admin-table-wrap">
+                            <table class="admin-data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ref / Room</th>
+                                        <th>Primary Guest</th>
+                                        <th>Accommodation & Stay</th>
+                                        <th>Room Base</th>
+                                        <th>Services</th>
+                                        <th>Tax (12%)</th>
+                                        <th>Total Amount</th>
+                                        <th>Bill Status</th>
+                                        <th>Manager Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="managerBillingTableBody">
+                                    <!-- Injected by admin.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Staff Management: Add New Manager or Receptionist & Directory -->
+                <div class="admin-card-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-user-plus text-gold"></i> Add Other Manager or Receptionist</h3>
+                        <span class="text-muted" style="font-size: 0.85rem;">Manager exclusive: Create and assign credentials for team members</span>
+                    </div>
+                    <div class="panel-body">
+                        <form id="addStaffForm" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Staff Admin ID</label>
+                                <input type="text" id="newStaffId" placeholder="e.g. MGR-102 or REC-202" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Staff Full Name</label>
+                                <input type="text" id="newStaffName" placeholder="e.g. David Sterling" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Staff Role</label>
+                                <select id="newStaffRole" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" required>
+                                    <option value="receptionist" selected>Receptionist</option>
+                                    <option value="manager">Manager</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Password</label>
+                                <input type="password" id="newStaffPass" placeholder="••••••••" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Email Address</label>
+                                <input type="email" id="newStaffEmail" placeholder="staff@hotel.com" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Phone Contact</label>
+                                <input type="tel" id="newStaffPhone" placeholder="+1 (555) 777-8899" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;">
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Department</label>
+                                <input type="text" id="newStaffDept" placeholder="e.g. Front Office / Operations" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;">
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Monthly Salary (₹)</label>
+                                <input type="number" id="newStaffSalary" placeholder="e.g. 52000" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;">
+                            </div>
+
+                            <div style="grid-column: 1 / -1; text-align: right; margin-top: 0.5rem;">
+                                <button type="submit" class="btn btn-gold">
+                                    <i class="fas fa-user-check"></i> Register & Add Staff Member
+                                </button>
+                            </div>
+                        </form>
+
+                        <h4 style="margin-bottom: 1rem; font-size: 1.1rem; color: var(--primary);">
+                            <i class="fas fa-users-cog text-gold"></i> Active Staff Directory (PostgreSQL / Local)
+                        </h4>
+                        <div id="managerStaffGrid" class="staff-cards-grid">
+                            <!-- Injected by admin.js -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- =======================================================
+                 SECTION B: RECEPTIONIST DASHBOARD
+                 ======================================================= -->
+            <div id="adminReceptionistSection" style="display: none;">
+                <!-- Receptionist KPI Metrics -->
+                <div class="admin-metrics-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="metric-card">
+                        <div class="metric-info">
+                            <span>Guest Check-ins / Stays</span>
+                            <h3 id="recMetricArrivals" class="text-gold">0</h3>
+                        </div>
+                        <div class="metric-icon-wrap metric-blue"><i class="fas fa-door-open"></i></div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-info">
+                            <span>Pending Guest Approvals</span>
+                            <h3 id="recMetricPendingApprovals" class="text-gold">0</h3>
+                        </div>
+                        <div class="metric-icon-wrap metric-purple"><i class="fas fa-user-clock"></i></div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-info">
+                            <span>Active Service Requests</span>
+                            <h3 id="recMetricPendingServices" class="text-gold">0</h3>
+                        </div>
+                        <div class="metric-icon-wrap metric-green"><i class="fas fa-bell-concierge"></i></div>
+                    </div>
+                </div>
+
+                <!-- 1. Guest Verification & Approval Queue -->
+                <div class="admin-card-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-user-check text-gold"></i> Guest Verification & Approval Queue</h3>
+                        <span class="text-muted" style="font-size: 0.85rem;">Receptionist duty: Verify guest ID proof, assign physical room number, and confirm check-in.</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="admin-table-wrap">
+                            <table class="admin-data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Booking Ref</th>
+                                        <th>Guest Details & ID Proof</th>
+                                        <th>Requested Accommodation</th>
+                                        <th>Assign Room #</th>
+                                        <th>Party Size</th>
+                                        <th>Verification Status</th>
+                                        <th>Receptionist Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="receptionistApprovalTableBody">
+                                    <!-- Injected by admin.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Service Requests Fulfillment Center -->
+                <div class="admin-card-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-concierge-bell text-gold"></i> Service Requests & Hospitality Fulfillment</h3>
+                        <span class="text-muted" style="font-size: 0.85rem;">Receptionist duty: Confirm that services (Breakfast, Chauffeur, Spa, Champagne) are performed.</span>
+                    </div>
+                    <div class="panel-body">
+                        <div id="receptionistServicesGrid" class="services-flow-grid">
+                            <!-- Injected by admin.js -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Add New Walk-in Guests & Details -->
+                <div class="admin-card-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-user-plus text-gold"></i> Walk-in Guest Counter Registration</h3>
+                        <span class="text-muted" style="font-size: 0.85rem;">Receptionist duty: Directly register new walk-in guests, assign rooms, and book stays.</span>
+                    </div>
+                    <div class="panel-body">
+                        <form id="walkinGuestForm" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Guest Full Name</label>
+                                <input type="text" id="walkinGuestName" placeholder="e.g. Liam Gallagher" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Guest Email</label>
+                                <input type="email" id="walkinGuestEmail" placeholder="liam@example.com" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Phone Number</label>
+                                <input type="tel" id="walkinGuestPhone" placeholder="+1 (555) 928-1122" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>ID Proof #</label>
+                                <input type="text" id="walkinGuestIdProof" placeholder="e.g. PASSPORT-Z9921" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Room Category</label>
+                                <select id="walkinRoomType" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" required>
+                                    <option value="standard">Standard Skyline Suite (₹2000/n)</option>
+                                    <option value="deluxe" selected>Deluxe Ocean King Suite (₹3500/n)</option>
+                                    <option value="suite">Zen Garden Wellness Suite (₹6000/n)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Assigned Room Number</label>
+                                <input type="text" id="walkinRoomNumber" placeholder="e.g. 102, 205, Villa-1" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" value="102" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Check-in Date</label>
+                                <input type="date" id="walkinCheckIn" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Check-out Date</label>
+                                <input type="date" id="walkinCheckOut" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label>Guest Count</label>
+                                <select id="walkinGuests" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;">
+                                    <option value="1">1 Adult</option>
+                                    <option value="2" selected>2 Adults</option>
+                                    <option value="3">3 Guests</option>
+                                    <option value="4">4+ Guests</option>
+                                </select>
+                            </div>
+
+                            <div style="grid-column: 2 / -1; display: flex; align-items: flex-end; justify-content: flex-end;">
+                                <button type="submit" class="btn btn-gold">
+                                    <i class="fas fa-check-circle"></i> Register Guest & Assign Room Instantly
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===================================================================
+         SCROLL-TRIGGERED LOGIN / REGISTER MODAL BOX
+         =================================================================== -->
+    <div id="authModal" class="auth-modal-backdrop">
+        <div class="auth-modal-card">
+            <!-- Close Button -->
+            <button id="closeAuthModal" class="modal-close-btn" title="Close dialog">&times;</button>
+
+            <!-- Scroll Notice Prompt -->
+            <div id="scrollPromptNotice" class="scroll-prompt-notice">
+                <i class="fas fa-sparkles"></i>
+                <span><strong>Special Guest Portal:</strong> Sign in to reserve rooms, view member rates, or test immediately with 1-click demo login below.</span>
+            </div>
+
+            <!-- Modal Header -->
+            <div class="auth-modal-header">
+                <div class="auth-brand-badge">
+                    <i class="fas fa-shield-alt"></i> Guest Access
+                </div>
+                <h3 id="modalTitle">Welcome Back</h3>
+                <p id="modalSubtitle">Sign in to book rooms, customize luxury add-ons, and view reservations.</p>
+            </div>
+
+            <!-- Tabs Switcher -->
+            <div class="auth-tabs">
+                <button type="button" id="tabLoginBtn" class="auth-tab-btn active">Guest Sign In</button>
+                <button type="button" id="tabRegisterBtn" class="auth-tab-btn">Create Account</button>
+                <button type="button" id="tabAdminBtn" class="auth-tab-btn"><i class="fas fa-shield-alt text-gold"></i> Staff / Admin</button>
+            </div>
+
+            <!-- Admin Forms Body -->
+            <div class="auth-form-body">
+                <div id="authErrorMsg" class="auth-error-alert"></div>
+
+                <!-- Sign In Form -->
+                <form id="loginForm" autocomplete="off">
+                    <div class="form-group">
+                        <label for="loginGuestName">Guest Full Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="loginGuestName" placeholder="e.g. Alex Rivera" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginIdProof">ID Proof</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="loginIdProof" placeholder="e.g. PASSPORT-US-984210" required>
+                        </div>
+                    </div>
+
+                    <div class="form-options-row">
+                        <label>
+                            <input type="checkbox" id="rememberMe" checked>
+                            <span>Remember my session</span>
+                        </label>
+                        <a href="javascript:void(0)" onclick="alert('Guest authentication uses your registered name and ID proof in the project_jqlp database.')">Need help?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-gold btn-block">
+                        <i class="fas fa-sign-in-alt"></i> Sign In to Booking Portal
+                    </button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" autocomplete="off" style="display: none;">
+                    <div class="form-group">
+                        <label for="regFullName">Full Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="regFullName" placeholder="e.g. Sophia Montgomery" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regIdProof">ID Proof</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="regIdProof" placeholder="e.g. PASSPORT-A12345" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regPhone">Mobile Phone</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="regPhone" placeholder="+1 (555) 019-2834">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-gold btn-block">
+                        <i class="fas fa-user-plus"></i> Register & Enter Booking Portal
+                    </button>
+                </form>
+
+                <!-- Admin & Staff Login Form -->
+                <form id="adminLoginForm" autocomplete="off" style="display: none;">
+                    <div id="adminAuthErrorMsg" class="auth-error-alert" style="display: none;"></div>
+
+                    <div class="form-group">
+                        <label for="adminLoginId">Admin / Staff ID</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-id-badge"></i>
+                            <input type="text" id="adminLoginId" placeholder="e.g. MGR-101 or REC-201" required>
+                        </div>
+                        <small class="text-muted">Use <strong>MGR-101</strong> for Manager or <strong>REC-201</strong> for Receptionist</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adminLoginName">Staff Full Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user-tie"></i>
+                            <input type="text" id="adminLoginName" placeholder="e.g. Robert Sterling or Sarah Jenkins" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adminLoginPass">Staff Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="adminLoginPass" placeholder="••••••••" autocomplete="new-password" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-gold btn-block">
+                        <i class="fas fa-door-open"></i> Authenticate & Enter Staff Portal
+                    </button>
+                </form>
+
+                <div class="modal-dismiss-link">
+                    <a href="javascript:void(0)" onclick="window.auth.closeModal(true)">Continue browsing without signing in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================
+         CHECKOUT & RESERVATION CONFIRMATION MODAL
+         =================================================================== -->
+    <div id="checkoutModal" class="auth-modal-backdrop">
+        <div class="checkout-modal-card">
+            <button id="closeCheckoutModal" class="modal-close-btn">&times;</button>
+            
+            <div class="checkout-modal-header">
+                <div>
+                    <span class="section-tag" style="background: rgba(197, 155, 39, 0.2); color: var(--gold);">Step 2 of 2</span>
+                    <h3 style="margin-top: 4px;">Confirm Your Reservation</h3>
+                </div>
+            </div>
+
+            <div class="checkout-modal-body">
+                <!-- Room summary card -->
+                <div class="checkout-room-summary">
+                    <img id="checkoutRoomImage" src="" alt="Suite Image" class="checkout-room-img">
+                    <div class="checkout-room-info">
+                        <h4 id="checkoutRoomName">Deluxe Ocean King Suite</h4>
+                        <div class="checkout-meta-line">
+                            <span id="checkoutDatesSummary"><i class="fas fa-calendar-alt text-gold"></i> 2026-10-15 to 2026-10-18</span>
+                            <span id="checkoutGuestsSummary"><i class="fas fa-user-friends text-gold"></i> 2 Guests</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add-on Services Selection -->
+                <h4 class="checkout-section-title"><i class="fas fa-concierge-bell text-gold"></i> Enhance Your Stay (Bespoke Add-ons)</h4>
+                <div id="checkoutAddonsList" class="checkout-addons-list">
+                    <!-- Populated dynamically by booking.js -->
+                </div>
+
+                <!-- Guest Details Confirmation -->
+                <h4 class="checkout-section-title"><i class="fas fa-address-card text-gold"></i> Primary Guest Information</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Guest Full Name</label>
+                        <input type="text" id="checkoutGuestName" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" readonly>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Contact Email</label>
+                        <input type="email" id="checkoutGuestEmail" class="btn-block" style="padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px;" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Special Requests / Preferences</label>
+                    <textarea id="checkoutSpecialRequests" rows="2" placeholder="e.g. High floor, quiet corner, early luggage drop-off, hypoallergenic pillows..." style="width: 100%; padding: 0.65rem; border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.88rem;"></textarea>
+                </div>
+
+                <!-- Live Price Calculation -->
+                <h4 class="checkout-section-title"><i class="fas fa-receipt text-gold"></i> Transparent Price Breakdown</h4>
+                <div class="bill-breakdown-card">
+                    <div class="bill-line">
+                        <span id="billBaseRate">Room Base Rate (2 Nights)</span>
+                        <span id="billBaseAmount">₹390.00</span>
+                    </div>
+                    <div class="bill-line">
+                        <span>Selected Add-on Experiences</span>
+                        <span id="billAddonsAmount">₹100.00</span>
+                    </div>
+                    <div class="bill-line">
+                        <span>Luxury Hospitality Tax & Service Fee (12%)</span>
+                        <span id="billTaxesAmount">₹58.80</span>
+                    </div>
+                    <div class="bill-line total-line">
+                        <span>Total Payable Amount</span>
+                        <span id="billTotalAmount" class="total-amount">₹548.80</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkout-modal-footer">
+                <button type="button" class="btn btn-outline-secondary" onclick="window.booking.closeCheckoutModal()">Cancel</button>
+                <button type="button" id="confirmBookingBtn" class="btn btn-gold">
+                    <i class="fas fa-lock"></i> Confirm & Complete Reservation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================
+         BOOKING CONFIRMATION VOUCHER MODAL
+         =================================================================== -->
+    <div id="voucherModal" class="auth-modal-backdrop">
+        <div class="voucher-modal-card">
+            <button id="closeVoucherModal" class="modal-close-btn">&times;</button>
+            <div class="voucher-top-banner">
+                <div class="voucher-check-icon"><i class="fas fa-check"></i></div>
+                <h2>Reservation Confirmed!</h2>
+                <p>A confirmation email has been dispatched with your official check-in voucher.</p>
+                <div class="voucher-ref-badge">
+                    REFERENCE: <span id="voucherRefNumber">RES-2026-9842</span>
+                </div>
+            </div>
+
+            <div class="voucher-details-grid">
+                <div class="voucher-item">
+                    <label>Guest Name</label>
+                    <p id="voucherGuestName">Alex Rivera</p>
+                </div>
+                <div class="voucher-item">
+                    <label>Reserved Accommodation</label>
+                    <p id="voucherRoomName">Deluxe Ocean King Suite</p>
+                </div>
+                <div class="voucher-item">
+                    <label>Check-in Date</label>
+                    <p id="voucherCheckIn">2026-10-15 (From 3:00 PM)</p>
+                </div>
+                <div class="voucher-item">
+                    <label>Check-out Date</label>
+                    <p id="voucherCheckOut">2026-10-18 (By 11:00 AM)</p>
+                </div>
+                <div class="voucher-item">
+                    <label>Length of Stay</label>
+                    <p id="voucherNights">3 Nights</p>
+                </div>
+                <div class="voucher-item">
+                    <label>Guests</label>
+                    <p id="voucherGuests">2 Guests</p>
+                </div>
+                <div class="voucher-item">
+                    <label>Total Amount Paid</label>
+                    <p id="voucherTotalPaid" class="text-gold" style="font-size: 1.15rem;">₹823.20</p>
+                </div>
+                <div class="voucher-item" style="grid-column: 1 / -1;">
+                    <label>Included Add-ons</label>
+                    <ul id="voucherAddonsList" style="margin: 0.5rem 0 0; padding-left: 1.2rem; color: var(--text-muted); line-height: 1.6;">
+                        <li>Standard stay (No extra add-on services)</li>
+                    </ul>
+                </div>
+
+                <div class="voucher-qr-wrap">
+                    <div class="qr-box">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div>
+                        <h5 style="margin-bottom: 2px;">Digital Mobile Pass</h5>
+                        <p class="text-muted" style="font-size: 0.8rem;">Present this QR code or Reference ID to the Concierge front-desk on arrival for express check-in.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button class="btn btn-outline-secondary btn-sm" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print Voucher
+                </button>
+                <button class="btn btn-gold btn-sm" onclick="window.booking.closeVoucherModal(); window.booking.openMyBookings();">
+                    <i class="fas fa-list-check"></i> View in My Reservations
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================
+         ROOM DETAILS MODAL
+         =================================================================== -->
+    <div id="roomDetailsModal" class="auth-modal-backdrop">
+        <div class="checkout-modal-card" style="max-width: 620px;">
+            <button id="closeRoomDetailsModal" class="modal-close-btn">&times;</button>
+            <div class="room-card-img-wrap" style="height: 240px;">
+                <img id="detailModalHeroImg" src="" alt="Room detail" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="checkout-modal-body">
+                <span id="detailModalType" class="section-tag">Deluxe Suite</span>
+                <h3 id="detailModalTitle" style="font-size: 1.6rem; margin-bottom: 0.5rem;">Deluxe Ocean King Suite</h3>
+                <div style="display: flex; gap: 1.5rem; font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">
+                    <span><i class="fas fa-star text-gold"></i> <strong id="detailModalRating">4.9</strong> <span id="detailModalReviews">(320 reviews)</span></span>
+                    <span><i class="fas fa-ruler-combined text-gold"></i> <span id="detailModalSize">580 sq.ft</span></span>
+                    <span><i class="fas fa-users text-gold"></i> <span id="detailModalCapacity">2 Guests</span></span>
+                    <span><i class="fas fa-bed text-gold"></i> <span id="detailModalBed">1 King Bed</span></span>
+                </div>
+                <p id="detailModalDesc" style="font-size: 0.92rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.6;"></p>
+                
+                <h4 style="font-size: 1rem; margin-bottom: 0.75rem;"><i class="fas fa-gem text-gold"></i> Suite Amenities & Inclusions</h4>
+                <div id="detailModalAmenities" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1.5rem; font-size: 0.88rem;"></div>
+            </div>
+            <div class="checkout-modal-footer">
+                <div>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">Starting from</span>
+                    <strong id="detailModalPrice" style="font-size: 1.4rem; color: var(--primary);">₹195</strong> <span style="font-size: 0.85rem; color: var(--text-muted);">/ night</span>
+                </div>
+                <button id="detailModalBookBtn" class="btn btn-gold">
+                    <i class="fas fa-calendar-check"></i> Book This Suite
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================
+         MY RESERVATIONS MODAL
+         =================================================================== -->
+    <div id="myBookingsModal" class="auth-modal-backdrop">
+        <div class="my-bookings-card">
+            <button id="closeMyBookingsModal" class="modal-close-btn">&times;</button>
+            <div class="my-bookings-header">
+                <div>
+                    <h3 style="color: #ffffff; font-size: 1.4rem;"><i class="fas fa-calendar-alt text-gold"></i> My Reservations</h3>
+                    <p style="color: #cbd5e1; font-size: 0.85rem; margin-top: 2px;">Manage upcoming stays, download vouchers, or cancel bookings.</p>
+                </div>
+            </div>
+            <div id="myBookingsListContainer" class="my-bookings-body">
+                <!-- Rendered dynamically by booking.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================
+         MANAGER OVERALL BILL FINALIZATION & INVOICE MODAL
+         =================================================================== -->
+    <div id="managerBillModal" class="auth-modal-backdrop">
+        <div class="checkout-modal-card" style="max-width: 680px;">
+            <button id="closeManagerBillModal" class="modal-close-btn">&times;</button>
+            <div class="checkout-modal-header" style="background: var(--primary);">
+                <div>
+                    <span class="admin-role-tag tag-manager" style="font-size: 0.72rem;">Manager Executive Authorization</span>
+                    <h3 style="margin-top: 4px; color: #ffffff;">Overall Reservation Bill & Invoice</h3>
+                </div>
+                <div style="text-align: right;">
+                    <span class="text-muted" style="font-size: 0.8rem; color: #cbd5e1 !important;">Booking Ref:</span>
+                    <h4 id="modalBillRef" style="color: var(--gold); margin: 0; font-family: monospace;">RES-2026-XXXX</h4>
+                </div>
+            </div>
+
+            <div class="checkout-modal-body">
+                <!-- Guest & Stay details summary -->
+                <div style="background: var(--bg-secondary); border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 1.25rem; font-size: 0.88rem; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div><strong>Guest:</strong> <span id="modalBillGuest">Alex Rivera</span></div>
+                    <div><strong>Stay:</strong> <span id="modalBillDates">Dates</span></div>
+                    <div><strong>Room:</strong> <span id="modalBillRoom">Suite</span></div>
+                    <div><strong>Contact:</strong> <span id="modalBillEmail">email</span> (<span id="modalBillPhone">phone</span>)</div>
+                </div>
+
+                <!-- Itemized Invoice breakdown -->
+                <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--primary);"><i class="fas fa-list-ol text-gold"></i> Stay & Services Breakdown</h4>
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-bottom: 1.25rem;">
+                    <thead>
+                        <tr style="border-bottom: 1.5px solid var(--border-color); color: var(--text-muted); text-align: left;">
+                            <th style="padding: 6px 0;">Item Description</th>
+                            <th style="padding: 6px 0; text-align: right;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #f1f5f9;">
+                            <td id="invoiceRoomDesc" style="padding: 8px 0;">Deluxe Ocean Suite</td>
+                            <td id="invoiceRoomAmount" style="padding: 8px 0; text-align: right; font-weight: 600;">₹0.00</td>
+                        </tr>
+                    </tbody>
+                    <tbody id="invoiceServicesList">
+                        <!-- Populated by admin.js -->
+                    </tbody>
+                </table>
+
+                <!-- Manager Adjustments: Discount & Extra Charges -->
+                <div style="background: #fdfbf7; border: 1px solid var(--border-gold); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 1.25rem;">
+                    <h5 style="margin-bottom: 8px; font-size: 0.9rem; color: var(--primary);"><i class="fas fa-sliders-h text-gold"></i> Manager Bill Adjustments</h5>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">Promotional Discount (₹)</label>
+                            <input type="number" id="billDiscountInput" value="0" min="0" step="5" style="width: 100%; padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 4px; font-weight: 600;">
+                        </div>
+                        <div>
+                            <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">Extra Incidental Surcharges (₹)</label>
+                            <input type="number" id="billExtraInput" value="0" min="0" step="5" style="width: 100%; padding: 6px 10px; border: 1px solid var(--border-color); border-radius: 4px; font-weight: 600;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final Calculations Card -->
+                <div class="bill-breakdown-card" style="margin-bottom: 1rem;">
+                    <div class="bill-line"><span>Net Subtotal (Room + Services):</span><span id="invoiceSubtotal">₹0.00</span></div>
+                    <div class="bill-line" style="color: var(--success);"><span>Manager Discount Applied:</span><span id="invoiceDiscountDisplay">-₹0.00</span></div>
+                    <div class="bill-line" style="color: var(--info);"><span>Additional Surcharges:</span><span id="invoiceExtraDisplay">+₹0.00</span></div>
+                    <div class="bill-line"><span>Luxury Hotel Tax & Service Fee (12%):</span><span id="invoiceTax">₹0.00</span></div>
+                    <div class="bill-line total-line"><span>Final Overall Balance:</span><span id="invoiceGrandTotal" class="total-amount">₹0.00</span></div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 0.88rem;">
+                    <input type="checkbox" id="billMarkPaidCheckbox" style="width: 16px; height: 16px; accent-color: var(--gold);">
+                    <label for="billMarkPaidCheckbox" style="font-weight: 600; cursor: pointer;">Mark bill as fully settled / paid by guest</label>
+                </div>
+            </div>
+
+            <div class="checkout-modal-footer">
+                <button type="button" class="btn btn-outline-secondary" onclick="window.admin.closeBillModal()">Close</button>
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="fas fa-print"></i> Print Invoice</button>
+                    <button type="button" id="managerSaveBillBtn" class="btn btn-gold"><i class="fas fa-save"></i> Finalize Overall Bill</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- ===================================================================
+         Footer Section
+         =================================================================== -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="brand-logo" style="margin-bottom: 1rem;">
+                        <div class="brand-crest"><i class="fas fa-crown"></i></div>
+                        <div class="brand-text">
+                            <h3>THE GRAND HORIZON</h3>
+                            <span>Luxury Resort & Spa</span>
+                        </div>
+                    </div>
+                    <p>An oasis of refined tranquility, pristine oceanfront vistas, Michelin-inspired dining, and tailored bespoke hospitality.</p>
+                    <div class="footer-social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Accommodations</h4>
+                    <ul>
+                        <li><a href="javascript:void(0)" onclick="window.app.switchToBookingView()">Deluxe Ocean King</a></li>
+                        <li><a href="javascript:void(0)" onclick="window.app.switchToBookingView()">Executive Skyline Suites</a></li>
+                        <li><a href="javascript:void(0)" onclick="window.app.switchToBookingView()">Oceanfront Private Villas</a></li>
+                        <li><a href="javascript:void(0)" onclick="window.app.switchToBookingView()">The Royal Penthouse</a></li>
+                        <li><a href="javascript:void(0)" onclick="window.app.switchToBookingView()">Family Residences</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Specialities</h4>
+                    <ul>
+                        <li><a href="#specialities">Michelin-Star Gastronomy</a></li>
+                        <li><a href="#specialities">Horizon Infinity Pool</a></li>
+                        <li><a href="#specialities">Aura Holistic Spa</a></li>
+                        <li><a href="#specialities">Smart Suite Tech</a></li>
+                        <li><a href="#specialities">VIP Chauffeur Service</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col footer-contact-info">
+                
+                    <h4>Concierge Desk</h4>
+
+                    <p><i class="fas fa-user"></i>Devanandana C</p>
+                    <p><i class="fas fa-envelope"></i><a href="mailto:20devanandana07@gmail.com">20devanandana07@gmail.com</a></p>
+                    
+                    <p><i class="fas fa-user"></i>Devang S R</p>
+                    <p><i class="fas fa-envelope"></i><a href="mailto:srdevang@gmail.com">srdevang@gmail.com</a></p>
+
+                    <p><i class="fas fa-user"></i>Kasinath K S</p>
+                    <p><i class="fas fa-envelope"></i><a href="mailto:kasinathks24@gmail.com">kasinathks24@gmail.com</a></p>
+
+                    <p><i class="fas fa-user"></i>Anandanarayan P</p>
+                    <p><i class="fas fa-envelope"></i><a href="mailto:anandanarayanp2006@gmail.com">anandanarayanp2006@gmail.com</a></p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 The Grand Horizon Luxury Resort & Spa. All rights reserved.</p>
+                <div class="dbms-badge">
+                    <i class="fas fa-database"></i> DBMS Group Project | D3 | S3 CSE D 
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/roomsData.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/booking.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

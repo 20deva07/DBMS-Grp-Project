@@ -1,0 +1,295 @@
+/* ===================================================================
+   Scroll-Triggered Login / Register Modal Box Styles
+   "The Grand Horizon Luxury Resort & Spa"
+   =================================================================== */
+
+.auth-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 21, 40, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.auth-modal-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.auth-modal-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 480px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 25px 60px -15px rgba(11, 21, 40, 0.35), 0 0 0 1px rgba(197, 155, 39, 0.25);
+    overflow: hidden;
+    position: relative;
+    transform: scale(0.94) translateY(15px);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auth-modal-backdrop.active .auth-modal-card {
+    transform: scale(1) translateY(0);
+}
+
+/* Modal Close Button */
+.modal-close-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+    background: #e2e8f0;
+    color: var(--primary);
+    transform: rotate(90deg);
+}
+
+/* Scroll Trigger Notice Banner */
+.scroll-prompt-notice {
+    background: linear-gradient(135deg, #0b1528 0%, #16243f 100%);
+    color: #ffffff;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    border-bottom: 2px solid var(--gold);
+}
+
+.scroll-prompt-notice i {
+    color: var(--gold);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.scroll-prompt-notice span {
+    line-height: 1.4;
+}
+
+/* Modal Header */
+.auth-modal-header {
+    padding: 1.75rem 2rem 1rem 2rem;
+    text-align: center;
+}
+
+.auth-brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--gold);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+}
+
+.auth-modal-header h3 {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 0.35rem;
+}
+
+.auth-modal-header p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
+/* Fast Demo Guest Login Bar */
+.demo-login-box {
+    margin: 0.75rem 2rem 1.25rem 2rem;
+    padding: 12px 16px;
+    background: var(--gold-light);
+    border: 1px dashed rgba(197, 155, 39, 0.6);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.demo-login-box p {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #8c6a0f;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-demo-instant {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    background: #ffffff;
+    border: 1.5px solid var(--gold);
+    color: #8c6a0f;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all var(--transition-fast);
+}
+
+.btn-demo-instant:hover {
+    background: var(--gold);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(197, 155, 39, 0.3);
+}
+
+/* Tabs */
+.auth-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 2rem;
+}
+
+.auth-tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 0.85rem 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    position: relative;
+    transition: color var(--transition-fast);
+}
+
+.auth-tab-btn.active {
+    color: var(--primary);
+}
+
+.auth-tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 3px 3px 0 0;
+}
+
+/* Form Styling */
+.auth-form-body {
+    padding: 1.5rem 2rem 2rem 2rem;
+}
+
+.auth-error-alert {
+    background: #fef2f2;
+    border-left: 4px solid var(--danger);
+    color: #b91c1c;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+    display: none;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.input-with-icon input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.92rem;
+    color: var(--text-main);
+    background: #fafbfc;
+    transition: all var(--transition-fast);
+}
+
+.input-with-icon input:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.15);
+}
+
+.form-options-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    margin-bottom: 1.25rem;
+    color: var(--text-muted);
+}
+
+.form-options-row label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.form-options-row a {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.form-options-row a:hover {
+    text-decoration: underline;
+}
+
+.modal-dismiss-link {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.modal-dismiss-link a {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    text-decoration: underline;
+}
+
+.modal-dismiss-link a:hover {
+    color: var(--primary);
+}
